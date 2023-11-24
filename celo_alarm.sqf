@@ -116,7 +116,7 @@ celo_fnc_init_alarm_guard_system = {
 
 		if (!isNil _onAlarmFnc) then {
 
-			[_alarm_type,_guard,_enemy] call _onAlarmFnc;
+			[_alarm_type,_guards,_guard,_enemy] call _onAlarmFnc;
 
 		} else {
 
