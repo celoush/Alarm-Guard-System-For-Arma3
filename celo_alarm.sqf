@@ -1,5 +1,10 @@
 celo_fnc_init_alarm_guard_system = {
-	params ["_base_name",["_guards",[]],["_afterAlarmFnc",objNull],["_onAlarmFnc",objNull]];
+	params [["_guards",[]],["_base_name",""],["_afterAlarmFnc",objNull],["_onAlarmFnc",objNull]];
+
+	if (_base_name == "") then {
+		private _system_time = systemTime;
+		_base_name = "celo_ags_base_"+random(1000,5000)+"_"+_system_time[5]+_system_time[6];
+	};
 
 	_logicCenter = createCenter sideLogic;
 	_logicGroup = createGroup _logicCenter;
