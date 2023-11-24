@@ -1,4 +1,4 @@
-#include "celo_alarm.sqf";
+#include "celo_alarm_guard_system.sqf";
 
 // You need to use array of minimal one parameter with array of units in alarm zone. Second array parameter is optional and is for unique name of alarm zone.
 // Third parameter is optional function called after alarm is initialized and four parameter is another optional custom function for changing behaviour when alarm is called.
