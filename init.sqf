@@ -12,14 +12,16 @@
 [[e_1,e_2,e_3,e_4,e_5],"base_1"] call celo_fnc_init_alarm_guard_system;
 
 // THIRD EXAMPLE - default with using name and "after alarm" function
-[[f_1,f_2,f_3,f_4],"base_2",{
+celo_test_alarm = {
 	alarm_base2 = true;	
-}] call celo_fnc_init_alarm_guard_system;
+};
+[[f_1,f_2,f_3,f_4],"base_2","celo_test_alarm"] call celo_fnc_init_alarm_guard_system;
 
 // FOURTH EXAMPLE - using name, "after alarm" and custom "on alarm" function 
-[[g_1,g_2,g_3],"base_3",{
+celo_test_alarm = {
 	alarm_base3 = true; 
-},{
+};
+celo_base3_reaction = {
 	params ["_alarm_type","_guards","_caller",["_target",objNull]];
 
 	{
@@ -35,7 +37,8 @@
 
 	} foreach _guards;
 
-}] call celo_fnc_init_alarm_guard_system;
+};
+[[g_1,g_2,g_3],"base_3","celo_test_alarm","celo_base3_reaction"] call celo_fnc_init_alarm_guard_system;
 
 // FIFTH EXAMPLE - 
 private _fifth_base_logic = [[x_1,x_2,x_3,x_4,x_5,x_6]] call celo_fnc_init_alarm_guard_system;
