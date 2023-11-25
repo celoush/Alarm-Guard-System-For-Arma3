@@ -20,16 +20,18 @@ Returned is logic object. You can change some values on them with setVariable if
 
 ### THIRD EXAMPLE - default with using name and "after alarm" function
 ```sqf
-[[f_1,f_2,f_3,f_4],"base_2",{
+celo_test2 = {
 	alarm_base2 = true;	
-}] call celo_fnc_init_alarm_guard_system;
+};
+[[f_1,f_2,f_3,f_4],"base_2","celo_test2"] call celo_fnc_init_alarm_guard_system;
 ```
 
 ### FOURTH EXAMPLE - using name, "after alarm" and custom "on alarm" function 
 ```sqf
-[[g_1,g_2,g_3],"base_3",{
+celo_test3 = {
 	alarm_base3 = true; 
-},{
+};
+celo_reaction3 = {
 	params ["_alarm_type","_guards","_caller",["_target",objNull]];
 
 	{
@@ -45,7 +47,8 @@ Returned is logic object. You can change some values on them with setVariable if
 
 	} foreach _guards;
 
-}] call celo_fnc_init_alarm_guard_system;
+};
+[[g_1,g_2,g_3],"base_3","celo_test3","celo_reaction3"] call celo_fnc_init_alarm_guard_system;
 ```
 
 ### FIFTH EXAMPLE - changing variables after init
