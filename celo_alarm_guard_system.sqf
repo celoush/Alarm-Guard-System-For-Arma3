@@ -1,19 +1,19 @@
 celo_fnc_init_alarm_guard_system = {
-	params [["_guards",[]],["_base_name",""],["_afterAlarmFnc",objNull],["_onAlarmFnc",objNull]];
+	params [["_guards",[]],["_base_name",""],["_afterAlarmFncName",""],["_onAlarmFncName",""]];
 
 	if (_base_name == "") then {
 		private _system_time = systemTime;
-		_base_name = "celo_ags_base_"+random(1000,5000)+"_"+_system_time[5]+_system_time[6];
+		_base_name = "celo_ags_base_"+(str floor random [1000,3000,5000])+"_"+(str (_system_time#4))+(str (_system_time#5))+(str (_system_time#6));
 	};
 
 	_logicCenter = createCenter sideLogic;
 	_logicGroup = createGroup _logicCenter;
 	_base_logic = _logicGroup createUnit ["Logic", [0,0,0], [], 0, "NONE"];
-
+	
 	_base_logic setVariable ["celo_ags_base_name",_base_name];
 	_base_logic setVariable ["celo_ags_guards",_guards];
-	_base_logic setVariable ["celo_ags_afterAlarmFnc",_afterAlarmFnc];
-	_base_logic setVariable ["celo_ags_onAlarmFnc",_onAlarmFnc];
+	_base_logic setVariable ["celo_ags_afterAlarmFncName",_afterAlarmFncName];
+	_base_logic setVariable ["celo_ags_onAlarmFncName",_onAlarmFncName];
 	// default config
 	_base_logic setVariable ["celo_ags_knowsAboutContactLimit",2.5];
 	_base_logic setVariable ["celo_ags_knowsAboutBodyLimit",3];
@@ -26,6 +26,7 @@ celo_fnc_init_alarm_guard_system = {
 		_x setVariable ["celo_ags_base_logic",_base_logic];
 
 		(group _x) addEventHandler ["knowsAboutChanged", {
+			scopeName "handler";
 			params ["_group","_targetUnit","_newKnowsAbout","_oldKnowsAbout"];
 
 			private _bodies = _logic getVariable "celo_ags_bodies";
@@ -45,7 +46,7 @@ celo_fnc_init_alarm_guard_system = {
 						[missionNamespace, _base_name+"_alarm", ["body",_guard,_targetUnit]] call BIS_fnc_callScriptedEventHandler;
 					};
 				};		
-				exitWith{};		
+				false breakOut "handler";
 			};
 
 			private _type = (_targetUnit call BIS_fnc_objectType)#0;
@@ -115,13 +116,12 @@ celo_fnc_init_alarm_guard_system = {
 	[missionNamespace, _base_name+"_alarm", { 
 
 		params ["_alarm_type","_guard",["_enemy",objNull]];
-		_base_logic = _guard getVariable "celo_ags_base_logic";
-		_guards = _base_logic getVariable "celo_ags_guards";
-		_onAlarmFnc = _base_logic getVariable "celo_ags_onAlarmFnc";
+		private _base_logic = _guard getVariable "celo_ags_base_logic";
+		private _guards = _base_logic getVariable "celo_ags_guards";
+		private _onAlarmFncName = _base_logic getVariable "celo_ags_onAlarmFncName";
 
-		if (!isNil _onAlarmFnc) then {
-
-			[_alarm_type,_guards,_guard,_enemy] call _onAlarmFnc;
+		if (_onAlarmFncName != "") then {
+			[_alarm_type,_guards,_guard,_enemy] call (missionNamespace getVariable _onAlarmFncName);
 
 		} else {
 
@@ -141,7 +141,7 @@ celo_fnc_init_alarm_guard_system = {
 					{_x setUnitPos _unit_pos} foreach units _grp;
 				};
 			} foreach _guards;
-		}
+		};
 
 		{
 			_x removeAllEventHandlers "FiredNear";
@@ -151,10 +151,10 @@ celo_fnc_init_alarm_guard_system = {
 
 		[missionNamespace, _base_name+"_alarm"] call BIS_fnc_removeAllScriptedEventHandlers;
 
-		private _afterAlarmFnc = _base_logic getVariable "celo_ags_afterAlarmFnc";
+		private _afterAlarmFncName = _base_logic getVariable "celo_ags_afterAlarmFncName";
 
-		if (!isNil _afterAlarmFnc) then {
-			[_alarm_type,_guards,_guard,_enemy] call _afterAlarmFnc;
+		if (_afterAlarmFncName!="") then {
+			[_alarm_type,_guards,_guard,_enemy] call (missionNamespace getVariable _afterAlarmFncName);
 		};
 
 
