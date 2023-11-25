@@ -1,7 +1,7 @@
 #include "celo_alarm_guard_system.sqf";
 
 // You need to use array of minimal one parameter with array of units in alarm zone. Second array parameter is optional and is for unique name of alarm zone.
-// Third parameter is optional function called after alarm is initialized and four parameter is another optional custom function for changing behaviour when alarm is called.
+// Third parameter is optional function name called after alarm is initialized and four parameter is another optional custom function name for changing behaviour when alarm is called.
 // Both of them have four parameters - string with name of alarm ("enemy"/"body"/"fired"), array of guard units, unit called alarm and target (enemy or body).
 // returned is logic object. You can change some values on them with setVariable if you need change default coeficients.
 
