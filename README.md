@@ -53,11 +53,12 @@ celo_reaction3 = {
 
 ### FIFTH EXAMPLE - changing variables after init
 ```sqf
-private _fifth_base_logic = [[x_1,x_2,x_3,x_4,x_5,x_6]] call celo_fnc_init_alarm_guard_system;
+private _fifth_base_logic = [[e_1,e_2,e_3,e_4,e_5]] call celo_fnc_init_alarm_guard_system;
 _fifth_base_logic setVariable ["celo_ags_knowsAboutContactLimit",3];
-_fifth_base_logic setVariable ["celo_ags_distanceSilencerLimit",50];
+_fifth_base_logic setVariable ["celo_ags_distanceSilencerLimit",70];
 // or you can additionaly change "on alarm" or "after alarm" function 
-_fifth_base_logic setVariable ["celo_ags_onAlarmFnc",{
-  systemChat "ALARM!!!!";
-}];
+celo_reaction_on_alarm = {
+	systemChat "ALARM!!!!";	
+};
+_fifth_base_logic setVariable ["celo_ags_onAlarmFncName","celo_reaction_on_alarm"];
 ```
