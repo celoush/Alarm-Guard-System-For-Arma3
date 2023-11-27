@@ -1,14 +1,15 @@
 celo_fnc_init_alarm_guard_system = {
 	params [["_guards",[]],["_base_name",""],["_afterAlarmFncName",""],["_onAlarmFncName",""]];
 
+	_logicCenter = createCenter sideLogic;
+	_logicGroup = createGroup _logicCenter;
+	_base_logic = _logicGroup createUnit ["Logic", [0,0,0], [], 0, "NONE"];
+
 	if (_base_name == "") then {
 		private _system_time = systemTime;
 		_base_name = "celo_ags_base_"+(str floor random [1000,3000,5000])+"_"+(str (_system_time#4))+(str (_system_time#5))+(str (_system_time#6));
 	};
-
-	_logicCenter = createCenter sideLogic;
-	_logicGroup = createGroup _logicCenter;
-	_base_logic = _logicGroup createUnit ["Logic", [0,0,0], [], 0, "NONE"];
+	missionNamespace setVariable [_base_name,_base_logic];	
 	
 	_base_logic setVariable ["celo_ags_base_name",_base_name];
 	_base_logic setVariable ["celo_ags_guards",_guards];
@@ -36,8 +37,6 @@ celo_fnc_init_alarm_guard_system = {
 				[_targetUnit,_main_unit] spawn {
 					params ["_targetUnit","_guard"];
 
-					//playsound3d ["A3\Dubbing_Radio_F\data\GRE\Male01GRE\RadioProtocolGRE\Normal\015_Targeting\Attack_1.ogg",_guard]; // debug sound
-
 					_guard setBehaviour (_guard getVariable ["celo_ags_wp_behaviour","DANGER"]);					
 					(group _guard) removeAllEventHandlers "knowsAboutChanged";
 					sleep 3;
@@ -59,8 +58,6 @@ celo_fnc_init_alarm_guard_system = {
 			private _limit_contact = _logic getVariable "celo_ags_knowsAboutContactLimit";
 
 			if (_newKnowsAbout > _limit_contact) then {
-
-				//playsound3d ["A3\Dubbing_Radio_F\data\GRE\Male01GRE\RadioProtocolGRE\Normal\100_Commands\Stop.ogg",_main_unit];	 // debug sound			
 
 				[_targetUnit,_main_unit,_logic] spawn {
 					params ["_targetUnit","_guard","_logic"];
@@ -101,7 +98,6 @@ celo_fnc_init_alarm_guard_system = {
 			[_unit] spawn {
 					params ["_guard"];
 					_guard setBehaviour (_guard getVariable ["celo_ags_wp_behaviour","COMBAT"]);	
-					// playsound3d ["A3\Dubbing_Radio_F\data\GRE\Male01GRE\RadioProtocolGRE\Normal\015_Targeting\Attack_1.ogg",_guard]; // debug sound
 
 					sleep 2;
 					if (alive _guard) then {
