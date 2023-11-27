@@ -19,6 +19,7 @@ celo_fnc_init_alarm_guard_system = {
 	_base_logic setVariable ["celo_ags_knowsAboutContactLimit",2.5];
 	_base_logic setVariable ["celo_ags_knowsAboutBodyLimit",3];
 	_base_logic setVariable ["celo_ags_distanceSilencerLimit",10];
+	_base_logic setVariable ["celo_ags_bodyObjectName","I_TargetSoldier"];
 	// internal
 	_base_logic setVariable ["celo_ags_bodies",[]];
 
@@ -75,10 +76,11 @@ celo_fnc_init_alarm_guard_system = {
 		}];
 
 		_x addEventHandler ["Killed",{
-			params ["_unit", "_killer"];
-			_body = "I_TargetSoldier" createVehicle getPos _unit;
+			params ["_unit", "_killer"];			
 			_logic = _unit getVariable "celo_ags_base_logic";
+			_bodyObjectName = _logic getVariable "celo_ags_bodyObjectName";
 			_bodies = _logic getVariable "celo_ags_bodies";
+			_body = _bodyObjectName createVehicle getPos _unit;
 			_bodies pushBack _body;
 			_logic setVariable ["bodies",_bodies];
 			_unit removeAllEventHandlers "Killed";
