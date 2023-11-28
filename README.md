@@ -4,7 +4,7 @@ Whole system is using one function **celo_fnc_init_alarm_guard_system**.
 You can create default waypoints for all units/guards in zone. Alarm is initialized when one of guards is in contact with enemy or when he hears a shot (without silencer) or he sees dead body (only from guards).
 
 For init you need to use array of minimal one parameter with array of units in alarm zone. Second array parameter is optional and is for unique name of alarm zone (created random). 
-Third parameter is optional function name called after alarm is initialized and four parameter is another optional custom function name for changing behaviour when alarm is called.
+Third parameter is optional code called after alarm is initialized and four parameter is another optional custom code for changing behaviour when alarm is called.
 Both of them have four parameters - string with name of alarm ("enemy"/"body"/"fired"), array of guard units, unit called alarm and target (enemy or body).
 Returned is logic object. You can change some values on them with setVariable if you need change default coeficients.
 
