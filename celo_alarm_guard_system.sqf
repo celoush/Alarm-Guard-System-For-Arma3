@@ -118,8 +118,8 @@ celo_fnc_init_alarm_guard_system = {
 		private _guards = _base_logic getVariable "celo_ags_guards";
 		private _onAlarmFnc = _base_logic getVariable "celo_ags_onAlarmFnc";
 
-		if (typeName _onAlarmFncName == "CODE") then {
-			[_alarm_type,_guards,_guard,_enemy] call _onAlarmFncName;
+		if (typeName _onAlarmFnc == "CODE") then {
+			[_alarm_type,_guards,_guard,_enemy] call _onAlarmFnc;
 
 		} else {
 
