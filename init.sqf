@@ -1,7 +1,7 @@
 #include "celo_alarm_guard_system.sqf";
 
 // You need to use array of minimal one parameter with array of units in alarm zone. Second array parameter is optional and is for unique name of alarm zone.
-// Third parameter is optional function name called after alarm is initialized and four parameter is another optional custom function name for changing behaviour when alarm is called.
+// Third parameter is optional code called after alarm is initialized and four parameter is another optional custom code for changing behaviour when alarm is called.
 // Both of them have four parameters - string with name of alarm ("enemy"/"body"/"fired"), array of guard units, unit called alarm and target (enemy or body).
 // returned is logic object. You can change some values on them with setVariable if you need change default coeficients.
 
@@ -12,13 +12,12 @@
 [[e_1,e_2,e_3,e_4,e_5],"base_1"] call celo_fnc_init_alarm_guard_system;
 
 // THIRD EXAMPLE - default with using name and "after alarm" function
-celo_test_alarm = {
+[[f_1,f_2,f_3,f_4],"base_2",{
 	alarm_base2 = true;	
-};
-[[f_1,f_2,f_3,f_4],"base_2","celo_test_alarm"] call celo_fnc_init_alarm_guard_system;
+}] call celo_fnc_init_alarm_guard_system;
 
 // FOURTH EXAMPLE - using name, "after alarm" and custom "on alarm" function 
-celo_test_alarm = {
+celo_base3_alarm = {
 	alarm_base3 = true; 
 };
 celo_base3_reaction = {
@@ -38,7 +37,7 @@ celo_base3_reaction = {
 	} foreach _guards;
 
 };
-[[g_1,g_2,g_3],"base_3","celo_test_alarm","celo_base3_reaction"] call celo_fnc_init_alarm_guard_system;
+[[g_1,g_2,g_3],"base_3",celo_base3_alarm,celo_base3_reaction] call celo_fnc_init_alarm_guard_system;
 
 // FIFTH EXAMPLE - 
 private _fifth_base_logic = [[x_1,x_2,x_3,x_4,x_5,x_6]] call celo_fnc_init_alarm_guard_system;
