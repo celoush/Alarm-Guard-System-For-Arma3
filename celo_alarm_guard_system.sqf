@@ -1,5 +1,5 @@
 celo_fnc_init_alarm_guard_system = {
-	params [["_guards",[]],["_base_name",""],["_afterAlarmFncName",""],["_onAlarmFncName",""]];
+	params [["_guards",[]],["_base_name",""],["_afterAlarmFnc",""],["_onAlarmFnc",""]];
 
 	_logicCenter = createCenter sideLogic;
 	_logicGroup = createGroup _logicCenter;
@@ -13,8 +13,8 @@ celo_fnc_init_alarm_guard_system = {
 	
 	_base_logic setVariable ["celo_ags_base_name",_base_name];
 	_base_logic setVariable ["celo_ags_guards",_guards];
-	_base_logic setVariable ["celo_ags_afterAlarmFncName",_afterAlarmFncName];
-	_base_logic setVariable ["celo_ags_onAlarmFncName",_onAlarmFncName];
+	_base_logic setVariable ["celo_ags_afterAlarmFnc",_afterAlarmFnc];
+	_base_logic setVariable ["celo_ags_onAlarmFnc",_onAlarmFnc];
 	// default config
 	_base_logic setVariable ["celo_ags_knowsAboutContactLimit",2.5];
 	_base_logic setVariable ["celo_ags_knowsAboutBodyLimit",3];
@@ -116,10 +116,10 @@ celo_fnc_init_alarm_guard_system = {
 		params ["_alarm_type","_guard",["_enemy",objNull]];
 		private _base_logic = _guard getVariable "celo_ags_base_logic";
 		private _guards = _base_logic getVariable "celo_ags_guards";
-		private _onAlarmFncName = _base_logic getVariable "celo_ags_onAlarmFncName";
+		private _onAlarmFnc = _base_logic getVariable "celo_ags_onAlarmFnc";
 
-		if (_onAlarmFncName != "") then {
-			[_alarm_type,_guards,_guard,_enemy] call (missionNamespace getVariable _onAlarmFncName);
+		if (typeName _onAlarmFncName == "CODE") then {
+			[_alarm_type,_guards,_guard,_enemy] call _onAlarmFncName;
 
 		} else {
 
@@ -149,10 +149,10 @@ celo_fnc_init_alarm_guard_system = {
 
 		[missionNamespace, _base_name+"_alarm"] call BIS_fnc_removeAllScriptedEventHandlers;
 
-		private _afterAlarmFncName = _base_logic getVariable "celo_ags_afterAlarmFncName";
+		private _afterAlarmFnc = _base_logic getVariable "celo_ags_afterAlarmFnc";
 
-		if (_afterAlarmFncName!="") then {
-			[_alarm_type,_guards,_guard,_enemy] call (missionNamespace getVariable _afterAlarmFncName);
+		if (typeName _afterAlarmFnc == "CODE") then {
+			[_alarm_type,_guards,_guard,_enemy] call _afterAlarmFnc;
 		};
 
 
