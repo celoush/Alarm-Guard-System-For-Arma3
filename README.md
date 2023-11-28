@@ -57,5 +57,5 @@ _fifth_base_logic setVariable ["celo_ags_distanceSilencerLimit",70];
 celo_reaction_on_alarm = {
 	systemChat "ALARM!!!!";	
 };
-_fifth_base_logic setVariable ["celo_ags_onAlarmFncName","celo_reaction_on_alarm"];
+_fifth_base_logic setVariable ["celo_ags_onAlarmFncName",celo_reaction_on_alarm];
 ```
