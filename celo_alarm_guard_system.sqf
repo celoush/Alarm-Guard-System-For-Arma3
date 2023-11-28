@@ -1,5 +1,5 @@
 celo_fnc_init_alarm_guard_system = {
-	params [["_guards",[]],["_base_name",""],["_afterAlarmFnc",""],["_onAlarmFnc",""]];
+	params [["_guards",[]],["_base_name",""],["_afterAlarmFnc",objNull],["_onAlarmFnc",objNull]];
 
 	_logicCenter = createCenter sideLogic;
 	_logicGroup = createGroup _logicCenter;
